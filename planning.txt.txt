@@ -1,0 +1,45 @@
+=======================================
+PLANNING
+=======================================
+
+
+Game Description
+-----------------
+
+- a game has rounds and a round has turns
+- at the start of a round, each player is given one suite of a standard deck of cards (valued 2-14)
+- another full suite is placed on the playing field face down, with random order
+- the players 
+- each turn, a card is drawn into the pot
+- each player bets on that pot with a card from their hand
+- the player with the highest card wins the pot; all played cards are discarded
+- draw cards null the turn, and the current pot continues to the next turn
+- the round ends once all players have played their cards
+- the game ends once a player has reached the cap points amount
+
+Components
+-----------------
+
+- Field (server)
+
+  - has a deck of cards
+  - has a pot
+  - has players
+  - can recieve played cards
+  - can determine the winner of a round
+  - can transfer points to players
+
+
+- Player (client)
+
+  - has a hand of cards
+  - has a score
+  - can be human or computer controlled
+  - can play cards remaining (2-10, J, Q, K, A)
+  - can see other players' hands
+
+  - commands:
+     - play X    ; play card X from hand
+     - look X    ; show X's current hand
+
+
