@@ -1,5 +1,6 @@
 
 import random
+import game
 
 class Field:
 
@@ -10,28 +11,29 @@ class Field:
 
     # checks to see if the score cap has been reached; if so, return the winner
     def capReached(self):
-        winner = None
+        winner = self.players[0]
 
         for player in self.players:
-            score = player.score
-            if score >= SCORE_CAP:
-                if winner and score > winner.score:
-                    max = player
-                
+            if player.bank > winner.bank:
+                winner = player
+        
+        if winner.bank < game.SCORE_CAP:
+            winner = None
+
         return winner
 
     # displays the drawn card to all players
     def showTurnStart(self, card):
-        print "NEW TURN."
-        print "The card %s was drawn from the deck. Pot = %d".format(card, self.pot)
+        print "\nNEW TURN."
+        print "The card {} was drawn from the deck. Pot = {}".format(card, self.pot)
 
     # show end turn results
     def showTurnEnd(self, moves, winner):
         for player in moves:
-            print "Player %s plays %s.".format(player, moves[player])
+            print "{} plays {}.".format(player.name, moves[player])
 
         if winner:
-            print "Player %s wins the turn!".format(winner.name)
+            print "{} wins the turn!".format(winner.name)
         else:
             print "Draw! Current pot is added to next round."
 
@@ -51,16 +53,20 @@ class Field:
         winner = self.players[0]
         for player in self.players:
             score = game.score(moves[player])
+            player.score = score
 
             if score > winner.score:
                 winner = player
-            elif score == winner.score:
-                if winner is not player: # need to check, elsewise P0 would never win
-                    winner = None
+
+        # deal with tie-breakers
+        for player in self.players:
+            if player.name != winner.name and winner.score == player.score:
+                winner = None
+                break
 
         # assign points if there is a winner
         if winner:
-            winner.score += self.pot
+            winner.bank += self.pot
             self.pot = 0
 
         # discard the used player cards
@@ -68,12 +74,12 @@ class Field:
             player.discard(moves[player])
 
         # end turn
-        self.showTurnEnd()
-
+        self.showTurnEnd(moves, winner)
 
     # show starting round results
     def showRoundStart(self):
-        print "NEW ROUND."
+        print "\nNEW ROUND."
+        print "Pot = 0"
 
     # show end round results
     def showRoundEnd(self):
@@ -81,14 +87,19 @@ class Field:
         print "Current Scores:"
 
         for player in self.players:
-            print "%s, %s".format(player.name, player.score)
+            print "{}, {}".format(player.name, player.bank)
 
     # event handler for a new round
     def newRound(self):
         # start round
+        self.pot = 0
+
         self.deck = game.newHand()
         random.shuffle(self.deck)
         self.showRoundStart()
+
+        for player in self.players:
+            player.resetHand()
 
         while self.deck: # still has cards
             self.newTurn()
@@ -102,18 +113,18 @@ class Field:
 
     # show end game results
     def showGameEnd(self, winner):
-        print "END GAME!"
-        print "%s is the winner!!".format(winner)
-        pass
+        print "\nEND GAME!"
+        print "{} is the winner!!".format(winner.name)
 
     # event handler for a new game
     def newGame(self):
-        self.players = game.createPlayers()
         self.showGameStart()
+        self.players = game.createPlayers()
 
         winner = None
         while not winner:
             self.newRound()
+
             winner = self.capReached()
         
         self.showGameEnd(winner)

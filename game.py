@@ -1,9 +1,10 @@
 
-from player import Player
-from field import Field
+import player
+import field
 
-SCORE_CAP = 150
+SCORE_CAP = 5
 
+"""
 # full hand of cards used by players 
 CARDS = [
     '2',
@@ -19,6 +20,13 @@ CARDS = [
     'Q',
     'K',
     'A']
+"""
+
+CARDS = [
+    '2',
+    '3',
+    '4'
+]
 
 # point value for each card
 CARD_SCORE = {
@@ -49,12 +57,12 @@ def score(card):
 
 # creates the players for the game
 def createPlayers():
-    names = input("Please enter the player names, seperated by spaces: ")
+    names = raw_input("Please enter the player names, seperated by spaces: ")
     names = names.split(',')
 
     players = []
     for name in names:
-        players.append(Player(name))
+        players.append(player.Player(name.strip()))
 
     return players
 
@@ -62,5 +70,5 @@ def createPlayers():
 # Run Game
 
 if __name__ == "__main__":
-    field = Field()
+    field = field.Field()
     field.newGame()
