@@ -13,14 +13,9 @@ class Player:
     def resetHand(self):
         self.hand = game.newHand()
 
-    def playCard(self, card):
+    # discards a card that has been played
+    def discard(self, card):
         self.hand.remove(card)
-
-    def hasCard(self, card):
-        return card in self.hand
-
-    def getScore(self):
-        return self.score
 
     # determine next move for this player
     def getMove(self):
@@ -35,9 +30,7 @@ class Player:
             if match:
                 card = match.group(0)
 
-                if self.hasCard(card):
+                if card in self.hand:
                     validMove = True
 
         return card
-
-

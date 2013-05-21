@@ -1,4 +1,9 @@
 
+from player import Player
+from field import Field
+
+SCORE_CAP = 150
+
 # full hand of cards used by players 
 CARDS = [
     '2',
@@ -36,9 +41,26 @@ CARD_SCORE = {
 def newHand():
     return list(CARDS)
 
-# returns the score value for the given card
 def score(card):
     if card in CARDS:
         return CARD_SCORE[card]
     else:
         return 0
+
+# creates the players for the game
+def createPlayers():
+    names = input("Please enter the player names, seperated by spaces: ")
+    names = names.split(',')
+
+    players = []
+    for name in names:
+        players.append(Player(name))
+
+    return players
+
+############################################
+# Run Game
+
+if __name__ == "__main__":
+    field = Field()
+    field.newGame()
