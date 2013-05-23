@@ -38,3 +38,29 @@ Components
   - can play cards remaining (2-10, J, Q, K, A)
   - can see other players' hands
 
+=======================================
+NEXT STEPS
+=======================================
+
+Iteration 0
+-----------
+- complete basic functionality of the game, command line
+
+Iteration 1
+-----------
+- make it so clients send a request to server to join
+- clients are independent of server
+
+Iteration 2
+-----------
+- make desktop GUI for the game 
+
+Iteration 3
+-----------
+- construct AI to play the game
+
+Iteration 4
+-----------
+- website to host the game/make online version
+- expand to mobile?
+
