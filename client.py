@@ -1,15 +1,27 @@
 
+from optparse import OptionParser
 import socket
 
-host = 'localhost'
-port = 50000
-size = 1024
+usage = "usage: %prog [options] arg"
+parser = OptionParser(usage)
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((host,port))
-s.send('Hello, world')
+parser.add_option("-x", "--host", dest="host", default="localhost", help="host IP to connect to")
+parser.add_option("-p", "--port", dest="port", default="50000", help="port to connect to")
+parser.add_option("-n", "--name", dest="name", default="noname", help="player's display name")
 
-data = s.recv(size)
-s.close()
+(options, args) = parser.parse_args()
 
-print 'Received:', data
+
+
+
+#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#s.connect((options.host, options.port))
+
+
+
+#s.send('Hello, world')
+
+#data = s.recv(size)
+#s.close()
+
+#print 'Received:', data

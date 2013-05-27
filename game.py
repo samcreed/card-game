@@ -15,12 +15,6 @@ class PROTOCOL:
     # server to client; display new details of game player hasn't recieved yet (output to screen, UDP)
     GAME_DETAILS = 56856455
 
-    # server to client; ask player for name (TCP)
-    REQUEST_NAME = 56569564
-
-    # client to server; recieve player name (TCP)
-    RECIEVE_NAME = 36233635
-
     # server to client; ask player for move (TCP)
     REQUEST_MOVE = 54754321
 

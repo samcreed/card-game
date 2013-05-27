@@ -13,6 +13,8 @@ s.listen(backlog)
 print "server listening..."
 
 while True:
+    # wait for clients to connect
+
     client, address = s.accept()
     data = client.recv(size)
 
