@@ -10,14 +10,14 @@ class Field:
         self.deck = []
 
     # checks to see if the score cap has been reached; if so, return the winner
-    def capReached(self):
+    def winnerFound(self):
         winner = self.players[0]
 
         for player in self.players:
             if player.bank > winner.bank:
                 winner = player
         
-        if winner.bank < game.SCORE_CAP:
+        if winner.bank < game.SCORE_CAP / len(self.players):
             winner = None
 
         return winner
@@ -119,12 +119,11 @@ class Field:
     # event handler for a new game
     def newGame(self):
         self.showGameStart()
-        self.players = game.createPlayers()
+        self.players = game.getPlayers()
 
         winner = None
         while not winner:
             self.newRound()
-
-            winner = self.capReached()
+            winner = self.winnerFound()
         
         self.showGameEnd(winner)

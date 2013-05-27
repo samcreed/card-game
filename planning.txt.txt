@@ -42,25 +42,22 @@ Components
 NEXT STEPS
 =======================================
 
-Iteration 0
+Iteration 0 (last week)
 -----------
 - complete basic functionality of the game, command line
 
-Iteration 1
+Iteration 1 (this week)
 -----------
 - make it so clients send a request to server to join
 - clients are independent of server
 
-Iteration 2
+Iteration 2 (sometime in June)
 -----------
-- make desktop GUI for the game 
+- make online web version with GUI
 
-Iteration 3
+Iteration 3 (sometime in June)
 -----------
 - construct AI to play the game
 
-Iteration 4
------------
-- website to host the game/make online version
-- expand to mobile?
+
 
