@@ -1,5 +1,6 @@
 
-import socket 
+import socket
+import protocol
 
 host = ''
 port = 50000

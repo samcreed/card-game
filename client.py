@@ -1,6 +1,7 @@
 
 from optparse import OptionParser
 import socket
+import protocol
 
 usage = "usage: %prog [options] arg"
 parser = OptionParser(usage)
@@ -10,7 +11,6 @@ parser.add_option("-p", "--port", dest="port", default="50000", help="port to co
 parser.add_option("-n", "--name", dest="name", default="noname", help="player's display name")
 
 (options, args) = parser.parse_args()
-
 
 
 
