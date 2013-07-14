@@ -1,27 +1,38 @@
 
-from optparse import OptionParser
-import socket
-import protocol
+# main client for the game
 
-usage = "usage: %prog [options] arg"
-parser = OptionParser(usage)
+# from optparse import OptionParser
+# import socket
+# import protocol
 
-parser.add_option("-x", "--host", dest="host", default="localhost", help="host IP to connect to")
-parser.add_option("-p", "--port", dest="port", default="50000", help="port to connect to")
-parser.add_option("-n", "--name", dest="name", default="noname", help="player's display name")
+# usage = "usage: %prog [options] arg"
+# parser = OptionParser(usage)
 
-(options, args) = parser.parse_args()
+# parser.add_option("-x", "--host", dest="host", default="localhost", help="host IP to connect to")
+# parser.add_option("-p", "--port", dest="port", default="50000", help="port to connect to")
+# parser.add_option("-n", "--name", dest="name", default="NONAME", help="player's display name")
 
-
-
-#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#s.connect((options.host, options.port))
+# (options, args) = parser.parse_args()
 
 
+from twisted.internet import reactor
+from twisted.internet.protocol import Factory, Protocol
+from twisted.internet.endpoints import TCP4ClientEndpoint
 
-#s.send('Hello, world')
+class Greeter(Protocol):
+    def sendMessage(self, msg):
+        self.transport.write("MESSAGE %s\n" % msg)
 
-#data = s.recv(size)
-#s.close()
+class GreeterFactory(Factory):
+    def buildProtocol(self, addr):
+        return Greeter()
 
-#print 'Received:', data
+def gotProtocol(p):
+    p.sendMessage("Hello")
+    reactor.callLater(1, p.sendMessage, "This is sent in a second")
+    reactor.callLater(2, p.transport.loseConnection)
+
+point = TCP4ClientEndpoint(reactor, "localhost", 1234)
+d = point.connect(GreeterFactory())
+d.addCallback(gotProtocol)
+reactor.run()

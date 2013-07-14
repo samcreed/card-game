@@ -1,4 +1,6 @@
 
+# game constants
+
 import player
 import field
 

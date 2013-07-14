@@ -48,8 +48,8 @@ Iteration 0 (last week)
 
 Iteration 1 (this week)
 -----------
-- make it so clients send a request to server to join
-- clients are independent of server
+- separate clients and server
+- need to make threads for each. server has main thread, can send requests to each client (and wait)
 
 Iteration 2 (sometime in June)
 -----------

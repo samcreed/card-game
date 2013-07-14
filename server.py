@@ -1,27 +1,14 @@
 
-import socket
-import protocol
+from twisted.internet import protocol
+from twisted.internet import reactor
 
-host = ''
-port = 50000
-backlog = 5
-size = 1024
+class Echo(protocol.Protocol):
+    def dataRecieved(self, data):
+        self.transport.write(data)
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((host, port))
-s.listen(backlog)
+class EchoFactory(protocol.Factory):
+    def buildProtocol(self, addr):
+        return Echo()
 
-print "server listening..."
-
-while True:
-    # wait for clients to connect
-
-    client, address = s.accept()
-    data = client.recv(size)
-
-    if data:
-        client.send(data)
-    
-    client.close()
-
-print "server closed."
+reactor.listenTCP(1234, EchoFactory())
+reactor.run()
